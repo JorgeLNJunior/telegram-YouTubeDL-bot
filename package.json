@@ -1,0 +1,32 @@
+{
+  "name": "telegram-youtubedl-bot",
+  "version": "0.0.0",
+  "description": "youtube downloader telegram bot",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot.git"
+  },
+  "author": "JorgeLNJunior",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/issues"
+  },
+  "homepage": "https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-telegram-bot-api": "^0.50.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.4",
+    "prettier": "2.0.5"
+  }
+}
