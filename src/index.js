@@ -14,17 +14,19 @@ bot.on('message', async (msg) => {
     bot.sendMessage(chatID, 'Por favor, envie um link válido')
   } else {
     try {
-      bot.sendMessage(chatID, 'Aguarde um pouco...')
+      const message = bot.sendMessage(chatID, 'Aguarde um pouco...')
 
       const data = await tydl.getBasicInfo(msg.text)
 
-      const s = moment
+      const videoLengthInSeconds = moment
         .utc(moment.duration(data.length_seconds, 'seconds').as('milliseconds'))
         .format('mm:ss')
 
+      bot.deleteMessage(chatID, (await message).message_id)
+
       bot.sendMessage(
         chatID,
-        `📺 *Canal:* ${data.author.name}\n🎬 *Título:* ${data.title}\n🕑 *Duração:* ${s}`,
+        `📺 *Canal:* ${data.author.name}\n🎬 *Título:* ${data.title}\n🕑 *Duração:* ${videoLengthInSeconds}`,
         { parse_mode: 'Markdown' }
       )
     } catch (error) {
