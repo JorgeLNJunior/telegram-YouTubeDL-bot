@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -22,7 +24,8 @@
     "dotenv": "^8.2.0",
     "moment": "^2.26.0",
     "node-telegram-bot-api": "^0.50.0",
-    "ytdl-core": "^2.1.7"
+    "ytdl-core": "^2.1.7",
+    "snyk": "^1.346.0"
   },
   "devDependencies": {
     "eslint": "^7.2.0",
@@ -30,5 +33,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "nodemon": "^2.0.4",
     "prettier": "2.0.5"
-  }
+  },
+  "snyk": true
 }
