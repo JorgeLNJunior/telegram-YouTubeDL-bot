@@ -52,6 +52,18 @@ bot.on('message', async (msg) => {
 
       const data = await ytdl.getBasicInfo(msg.text)
 
+      if (data.length_seconds >= 1800) {
+        bot.deleteMessage(chatID, (await message).message_id)
+
+        bot.sendMessage(
+          chatID,
+          '*Desculpe, este vídeo não pode ser baixado porque ele ultrapassa os 30 minutos* 😭',
+          { parse_mode: 'Markdown' }
+        )
+
+        return
+      }
+
       const videoLengthInSeconds = moment
         .utc(moment.duration(data.length_seconds, 'seconds').as('milliseconds'))
         .format('mm:ss')
