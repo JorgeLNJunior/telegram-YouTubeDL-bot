@@ -1,6 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api')
-const tydl = require('ytdl-core')
+const ytdl = require('ytdl-core')
 const moment = require('moment')
+const fs = require('fs')
 require('dotenv').config()
 
 const { isYoutubeURL } = require('./utils/link')
@@ -48,22 +49,58 @@ bot.on('message', async (msg) => {
   } else {
     try {
       const message = bot.sendMessage(chatID, 'Aguarde um pouco...')
+      const waitGif = bot.sendDocument(
+        chatID,
+        'https://media.giphy.com/media/pFZTlrO0MV6LoWSDXd/giphy.gif'
+      )
 
-      const data = await tydl.getBasicInfo(msg.text)
+      const data = await ytdl.getBasicInfo(msg.text)
+
+      if (data.length_seconds >= 1800) {
+        bot.deleteMessage(chatID, (await message).message_id)
+
+        bot.sendMessage(
+          chatID,
+          '*Desculpe, este vídeo não pode ser baixado porque ele ultrapassa os 30 minutos* 😭',
+          { parse_mode: 'Markdown' }
+        )
+
+        return
+      }
 
       const videoLengthInSeconds = moment
         .utc(moment.duration(data.length_seconds, 'seconds').as('milliseconds'))
         .format('mm:ss')
 
-      bot.deleteMessage(chatID, (await message).message_id)
+      const filePath = `downloads/${data.title}.mp4`
 
-      bot.sendMessage(
-        chatID,
-        `📺 *Canal:* ${data.author.name}\n🎬 *Título:* ${data.title}\n🕑 *Duração:* ${videoLengthInSeconds}`,
-        { parse_mode: 'Markdown' }
-      )
+      ytdl(msg.text, { quality: 136, filter: 'video' })
+        .pipe(fs.createWriteStream(filePath))
+        .on('finish', async () => {
+          await bot.sendVideo(chatID, filePath)
+
+          fs.unlink(filePath, (error) => {
+            if (error) {
+              console.log(error)
+            }
+          })
+
+          bot.deleteMessage(chatID, (await message).message_id)
+          bot.deleteMessage(chatID, (await waitGif).message_id)
+
+          bot.sendMessage(
+            chatID,
+            `📺 *Canal:* ${data.author.name}\n🎬 *Título:* ${data.title}\n🕑 *Duração:* ${videoLengthInSeconds}`,
+            { parse_mode: 'Markdown' }
+          )
+        })
+        .on('error', () => {
+          bot.sendMessage(chatID, 'Desculpe, ocorreu um erro')
+          return
+        })
     } catch (error) {
-      bot.sendMessage(chatID, error)
+      bot.sendMessage(chatID, 'Desculpe, ocorreu um erro')
+      return
     }
   }
 })
