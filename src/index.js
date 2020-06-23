@@ -49,6 +49,10 @@ bot.on('message', async (msg) => {
   } else {
     try {
       const message = bot.sendMessage(chatID, 'Aguarde um pouco...')
+      const waitGif = bot.sendDocument(
+        chatID,
+        'https://media.giphy.com/media/pFZTlrO0MV6LoWSDXd/giphy.gif'
+      )
 
       const data = await ytdl.getBasicInfo(msg.text)
 
@@ -68,19 +72,35 @@ bot.on('message', async (msg) => {
         .utc(moment.duration(data.length_seconds, 'seconds').as('milliseconds'))
         .format('mm:ss')
 
-      bot.deleteMessage(chatID, (await message).message_id)
+      const filePath = `downloads/${data.title}.mp4`
 
-      ytdl(msg.text, { quality: 136 }).pipe(
-        fs.createWriteStream(`downloads/${data.title}.mp4`)
-      )
+      ytdl(msg.text, { quality: 136, filter: 'video' })
+        .pipe(fs.createWriteStream(filePath))
+        .on('finish', async () => {
+          await bot.sendVideo(chatID, filePath)
 
-      bot.sendMessage(
-        chatID,
-        `📺 *Canal:* ${data.author.name}\n🎬 *Título:* ${data.title}\n🕑 *Duração:* ${videoLengthInSeconds}`,
-        { parse_mode: 'Markdown' }
-      )
+          fs.unlink(filePath, (error) => {
+            if (error) {
+              console.log(error)
+            }
+          })
+
+          bot.deleteMessage(chatID, (await message).message_id)
+          bot.deleteMessage(chatID, (await waitGif).message_id)
+
+          bot.sendMessage(
+            chatID,
+            `📺 *Canal:* ${data.author.name}\n🎬 *Título:* ${data.title}\n🕑 *Duração:* ${videoLengthInSeconds}`,
+            { parse_mode: 'Markdown' }
+          )
+        })
+        .on('error', () => {
+          bot.sendMessage(chatID, 'Desculpe, ocorreu um erro')
+          return
+        })
     } catch (error) {
-      bot.sendMessage(chatID, error)
+      bot.sendMessage(chatID, 'Desculpe, ocorreu um erro')
+      return
     }
   }
 })
