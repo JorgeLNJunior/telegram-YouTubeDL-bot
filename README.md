@@ -10,9 +10,9 @@ Bot que realiza downloads de vídeos do youtube. Este projeto possui um [quadro 
 [![Bot Link](https://img.shields.io/badge/Telegram-Bot-blue.svg?style=flat-square&logo=telegram)](https://t.me/downloader_yt_bot) 
 [![Codacy Badge](https://img.shields.io/codacy/grade/18a8c98a44194fef92e4947badd1b858/master?style=flat-square)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JorgeLNJunior/telegram-YouTubeDL-bot&amp;utm_campaign=Badge_Grade)
 [![License](https://img.shields.io/github/license/JorgeLNJunior/telegram-YouTubeDL-bot?style=flat-square)](https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/blob/master/LICENSE.md)
-[![License](https://img.shields.io/github/release-date-pre/JorgeLNJunior/telegram-YouTubeDL-bot?style=flat-square)](https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/releases)
-[![License](https://img.shields.io/github/v/release/JorgeLNJunior/telegram-YouTubeDL-bot?include_prereleases&sort=semver&style=flat-square)](https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/releases)
-[![License](https://img.shields.io/snyk/vulnerabilities/github/JorgeLNJunior/telegram-YouTubeDL-bot?style=flat-square)](https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/blob/master/package.json)
+[![Release Date](https://img.shields.io/github/release-date-pre/JorgeLNJunior/telegram-YouTubeDL-bot?style=flat-square)](https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/releases)
+[![Last Release](https://img.shields.io/github/v/release/JorgeLNJunior/telegram-YouTubeDL-bot?include_prereleases&sort=semver&style=flat-square)](https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/releases)
+[![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/JorgeLNJunior/telegram-YouTubeDL-bot?style=flat-square)](https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/blob/master/package.json)
 
 </div>
 
@@ -22,11 +22,5 @@ Clone o projeto para a sua máquina local. Após criar o bot com o [BotFather](h
 ## Comandos
 `/info` - Retorna informações sobre o bot
 
-
 ## Licença
 [MIT License](https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot/blob/master/LICENSE.md) © [Jorge Junior](https://github.com/JorgeLNJunior/)
-
-
-
-
-
