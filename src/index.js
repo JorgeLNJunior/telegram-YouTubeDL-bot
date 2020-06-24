@@ -74,6 +74,10 @@ bot.on('message', async (msg) => {
 
       const filePath = `downloads/${data.title}.mp4`
 
+      if (!fs.existsSync('downloads')) {
+        fs.mkdirSync('downloads')
+      }
+
       ytdl(msg.text, { quality: 136, filter: 'video' })
         .pipe(fs.createWriteStream(filePath))
         .on('finish', async () => {
@@ -94,7 +98,9 @@ bot.on('message', async (msg) => {
             { parse_mode: 'Markdown' }
           )
         })
-        .on('error', () => {
+        .on('error', async () => {
+          bot.deleteMessage(chatID, (await message).message_id)
+          bot.deleteMessage(chatID, (await waitGif).message_id)
           bot.sendMessage(chatID, 'Desculpe, ocorreu um erro')
           return
         })
