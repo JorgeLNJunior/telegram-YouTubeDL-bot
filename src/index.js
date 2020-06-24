@@ -7,9 +7,19 @@ require('dotenv').config()
 const { isYoutubeURL } = require('./utils/link')
 const { isCommand } = require('./utils/message')
 
-const token = process.env.TOKEN
+const TOKEN = process.env.TOKEN
+const externalURL = 'https://telegram-youtubedl-bot.herokuapp.com/'
+const HOST = process.env.HOST || '0.0.0.0'
+const PORT = process.env.PORT || 443
 
-const bot = new TelegramBot(token, { polling: true })
+const bot = new TelegramBot(TOKEN, {
+  webHook: {
+    port: PORT,
+    host: HOST,
+  },
+})
+
+bot.setWebHook(externalURL + ':' + PORT + '/bot' + TOKEN)
 
 // Commands
 
