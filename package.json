@@ -22,10 +22,11 @@
   "homepage": "https://github.com/JorgeLNJunior/telegram-YouTubeDL-bot#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "fluent-ffmpeg": "^2.1.2",
     "moment": "^2.26.0",
     "node-telegram-bot-api": "^0.50.0",
-    "ytdl-core": "^2.1.7",
-    "snyk": "^1.346.0"
+    "snyk": "^1.346.0",
+    "ytdl-core": "^2.1.7"
   },
   "devDependencies": {
     "eslint": "^7.2.0",
