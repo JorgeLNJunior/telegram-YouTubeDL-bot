@@ -1,26 +1,26 @@
 const TelegramBot = require('node-telegram-bot-api')
 const ytdl = require('ytdl-core')
+const ffmpeg = require('fluent-ffmpeg')
 const fs = require('fs')
 require('dotenv').config()
 
-const { isYoutubeURL } = require('./utils/link')
-const { isCommand } = require('./utils/message')
-const { secondsToMinutes } = require('./utils/time')
-const ffmpeg = require('fluent-ffmpeg')
+const { isYoutubeURL, isCommand, secondsToMinutes } = require('./utils')
 
 const TOKEN = process.env.TOKEN
-const externalURL = 'https://telegram-youtubedl-bot.herokuapp.com/'
-const HOST = process.env.HOST || '0.0.0.0'
-const PORT = process.env.PORT || 443
+// const externalURL = 'https://telegram-youtubedl-bot.herokuapp.com/'
+// const HOST = process.env.HOST || '0.0.0.0'
+// const PORT = process.env.PORT || 443
 
-const bot = new TelegramBot(TOKEN, {
-  webHook: {
-    port: PORT,
-    host: HOST,
-  },
-})
+const bot = new TelegramBot(TOKEN, { polling: true })
 
-bot.setWebHook(externalURL + ':' + PORT + '/bot' + TOKEN)
+// const bot = new TelegramBot(TOKEN, {
+//   webHook: {
+//     port: PORT,
+//     host: HOST,
+//   },
+// })
+
+// bot.setWebHook(externalURL + ':' + PORT + '/bot' + TOKEN)
 
 // Commands
 
@@ -122,13 +122,13 @@ bot.on('message', async (msg) => {
                   return
                 })
                 .on('end', async () => {
-                  bot.deleteMessage(chatID, (await message).message_id)
-                  bot.deleteMessage(chatID, (await waitGif).message_id)
-
                   await bot.sendVideo(
                     chatID,
                     `downloads/finished/${data.title}.mp4`
                   )
+
+                  bot.deleteMessage(chatID, (await message).message_id)
+                  bot.deleteMessage(chatID, (await waitGif).message_id)
 
                   bot.sendMessage(
                     chatID,
