@@ -23,7 +23,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "fluent-ffmpeg": "^2.1.2",
-    "moment": "^2.26.0",
+    "moment": "^2.27.0",
     "node-telegram-bot-api": "^0.50.0",
     "snyk": "^1.346.0",
     "ytdl-core": "^2.1.7"
